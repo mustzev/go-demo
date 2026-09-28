@@ -1,12 +1,7 @@
 package main
 
-import (
-	"fmt"
-
-	"go-demo/internal/test"
-)
+import "fmt"
 
 func main() {
-	fmt.Printf("main\n")
-	test.Log()
+	fmt.Println("Hello, main")
 }
