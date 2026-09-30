@@ -7,9 +7,9 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"go-demo/internal/feature/post"
+	"go-demo/internal/domains/post"
 	"go-demo/internal/platform/storage"
-	"go-demo/internal/utils"
+	http1 "go-demo/internal/utils/http"
 )
 
 const DATABASE_URL = "postgres://postgres:99946632@localhost:5432/demo?sslmode=disable"
@@ -22,12 +22,12 @@ func main() {
 	}
 	defer db.Close()
 
-	postRepository := post.NewRepo(db)
-	postService := post.NewService(postRepository)
+	postRepo := post.NewRepo(db)
+	postService := post.NewService(postRepo)
 	postHandler := post.NewHandler(postService)
 
 	r := chi.NewRouter()
-	r.Use(utils.LoggingMiddleware)
+	r.Use(http1.LoggingMiddleware)
 	r.Route("/api", func(r chi.Router) {
 		r.Mount("/posts", postHandler.Router())
 	})
